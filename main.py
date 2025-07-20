@@ -58,4 +58,3 @@ if submitted:
 
     collection.insert_one(doc)
     st.success("✅ Your rishta has been posted!")
-    st.experimental_rerun()  # Refresh app to show the new post immediately
