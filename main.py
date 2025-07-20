@@ -21,10 +21,10 @@ for r in rishtay:
         st.write(f"Gender: {r['gender']}")
         st.write(f"Location: {r['location']}")
         st.write(f"Bio: {r['bio']}")
-        # Display image if exists
+        st.write(f"📞 Contact: {r.get('contact', 'Not provided')}")
         if "image" in r:
             img_data = base64.b64decode(r["image"])
-            st.image(img_data, width=400)  # limit width to 400 pixels
+            st.image(img_data, width=400)
         st.markdown("---")
 
 # Rishta Post Form
@@ -35,6 +35,7 @@ with st.sidebar.form("post_form", clear_on_submit=True):
     age = st.number_input("Age", min_value=18, max_value=80)
     gender = st.selectbox("Gender", ["Male", "Female"])
     location = st.text_input("Location")
+    contact = st.text_input("Contact No (WhatsApp)")
     bio = st.text_area("Short Bio")
     image = st.file_uploader("Upload Image", type=["png", "jpg", "jpeg"])
     
@@ -43,7 +44,6 @@ with st.sidebar.form("post_form", clear_on_submit=True):
 if submitted:
     img_base64 = None
     if image is not None:
-        # Convert image to base64 string
         img_base64 = base64.b64encode(image.read()).decode()
 
     doc = {
@@ -51,6 +51,7 @@ if submitted:
         "age": age,
         "gender": gender,
         "location": location,
+        "contact": contact,
         "bio": bio,
     }
     if img_base64:
